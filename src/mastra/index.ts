@@ -7,7 +7,7 @@ import { completenessScorer, reasoningQualityScorer } from './scorers/pitch-scor
 
 export const mastra = new Mastra({
   workflows: { pitchWorkflow },
-  agents: { pitchAgent },
+  agents: {pitchJudge: pitchAgent },
   scorers: { completenessScorer, reasoningQualityScorer },
   storage: new LibSQLStore({
     url: ':memory:',

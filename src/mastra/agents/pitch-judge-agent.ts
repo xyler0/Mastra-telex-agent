@@ -5,7 +5,7 @@ import { pitchEvaluatorTool } from '../tools/evaluate-pitch-tool';
 import { scorers } from '../scorers/pitch-scorers';
 
 export const pitchAgent = new Agent({
-  name: 'Pitch Judge Agent',
+  name: 'PitchJudge',
   instructions: `
 You are an AI startup pitch judge. Your purpose is to analyze startup ideas
 and assign detailed quantitative scores across multiple criteria:

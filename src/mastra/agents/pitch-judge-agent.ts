@@ -1,3 +1,4 @@
+// agents/pitch-judge-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { Memory } from '@mastra/memory';
 import { LibSQLStore } from '@mastra/libsql';
@@ -7,22 +8,12 @@ import { scorers } from '../scorers/pitch-scorers';
 export const pitchAgent = new Agent({
   name: 'PitchJudge',
   instructions: `
-You are an AI startup pitch judge. Your purpose is to analyze startup ideas
-and assign detailed quantitative scores across multiple criteria:
-- Clarity of presentation
-- Problem definition
-- Solution innovation
-- Market potential
-- Feasibility
-- Team strength
-- Wow factor / creativity
-
-You must respond in structured JSON format when evaluating a pitch. Do not return explanations outside JSON.
-If unclear, request clarification from user.
-
-Use the 'evaluate-pitch' tool to perform analysis and scoring.
+You are PitchJudge — an AI startup evaluator.
+When called via A2A, you MUST NOT ask for clarification.
+Always evaluate any pitch text provided, even if short.
+Use the 'evaluate-pitch' tool and return structured JSON.
 `,
-  model: 'google/gemini-2.5-flash',
+  model: 'google/gemini-2.0-flash',
   tools: { pitchEvaluatorTool },
   scorers: {
     completeness: {

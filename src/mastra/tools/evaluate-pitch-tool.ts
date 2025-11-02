@@ -1,3 +1,4 @@
+// tools/evaluate-pitch-tool.ts
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -27,7 +28,7 @@ export const pitchEvaluatorTool = createTool({
     const { pitch } = context;
     if (!pitch) throw new Error('Pitch text missing');
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
     const prompt = `
 You are an AI pitch evaluator. Analyze the following startup pitch and rate it
 from 1–10 on these criteria:

@@ -9,7 +9,7 @@ export const reasoningQualityScorer = createScorer({
   description: 'Evaluates the depth, consistency, and balance of AI reasoning in scoring the pitch.',
   type: 'agent',
   judge: {
-    model: 'google/gemini-2.5-flash',
+    model: 'google/gemini-2.0-flash',
     instructions:
       'Assess whether the assistant provided a coherent, balanced reasoning for the pitch evaluation. Return JSON with numeric quality score.',
   },

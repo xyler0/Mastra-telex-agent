@@ -22,7 +22,7 @@ If unclear, request clarification from user.
 
 Use the 'evaluate-pitch' tool to perform analysis and scoring.
 `,
-  model: 'google/gemini-2.5-pro',
+  model: 'google/gemini-2.5-flash',
   tools: { pitchEvaluatorTool },
   scorers: {
     completeness: {

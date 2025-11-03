@@ -1,4 +1,3 @@
-// tools/evaluate-pitch-tool.ts
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -13,16 +12,9 @@ export const pitchEvaluatorTool = createTool({
   inputSchema: z.object({
     pitch: z.string().describe('Startup pitch text to evaluate'),
   }),
+  // Output as plain text — not JSON
   outputSchema: z.object({
-    clarity: z.number(),
-    problemDefinition: z.number(),
-    solutionInnovation: z.number(),
-    marketPotential: z.number(),
-    feasibility: z.number(),
-    teamStrength: z.number(),
-    wowFactor: z.number(),
-    overall_score: z.number(),
-    summary: z.string(),
+    evaluation: z.string(),
   }),
   execute: async ({ context }) => {
     const { pitch } = context;
@@ -30,32 +22,27 @@ export const pitchEvaluatorTool = createTool({
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
     const prompt = `
-You are an AI pitch evaluator. Analyze the following startup pitch and rate it
-from 1–10 on these criteria:
-- Clarity
-- Problem Definition
-- Solution & Innovation
-- Market Potential
-- Feasibility / Execution
-- Team Strength
-- Wow Factor / Creativity
+You are an AI startup pitch evaluator.
+Evaluate the following pitch and respond ONLY in this strict format:
 
-Return **JSON only** with numeric scores, overall_score (0–100), and a short feedback summary.
+Clarity = <number>
+Feasibility / Execution = <number>
+Market Potential = <number>
+Problem Definition = <number>
+Solution & Innovation = <number>
+Team Strength = <number>
+Wow Factor / Creativity = <number>
+overall_score = <number>
+feedback: <short summary>
+
+No JSON, no code blocks, no explanation text.
+
 Pitch:
 ${pitch}
 `;
 
     const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    return safeParse(text);
+    const text = result.response.text().trim();
+    return { evaluation: text };
   },
 });
-
-function safeParse(txt: string) {
-  try {
-    return JSON.parse(txt);
-  } catch {
-    const match = txt.match(/\{[\s\S]*\}/);
-    return match ? JSON.parse(match[0]) : { error: 'Invalid JSON', raw: txt };
-  }
-}

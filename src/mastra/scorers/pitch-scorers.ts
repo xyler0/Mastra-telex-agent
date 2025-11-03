@@ -11,7 +11,7 @@ export const reasoningQualityScorer = createScorer({
   judge: {
     model: 'google/gemini-2.0-flash',
     instructions:
-      'Assess whether the assistant provided a coherent, balanced reasoning for the pitch evaluation. Return JSON with numeric quality score.',
+      'Assess whether the assistant provided a coherent, balanced reasoning for the pitch evaluation. Return with numeric quality score.',
   },
 })
   .preprocess(({ run }) => {
